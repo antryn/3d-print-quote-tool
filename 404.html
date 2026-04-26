@@ -20,7 +20,7 @@
         sessionStorage.setItem("spa-redirect", l.pathname + l.search + l.hash);
         // Strip the path back to the configured base (default "/").
         // This file is copied to dist/ at build time, so it sits next to index.html.
-        var base = "/3d-print-quote-tool/"; // replaced by the build script
+        var base = "/"; // replaced by the build script
         l.replace(l.protocol + "//" + l.host + base);
       })();
     </script>
