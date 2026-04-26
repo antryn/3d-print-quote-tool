@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>FORGE3D</title>
+    <!--
+      GitHub Pages SPA fallback.
+
+      GH Pages serves this file for any URL it can't find on disk. We capture
+      the requested path into sessionStorage, then redirect to the SPA root.
+      A small inline script in index.html (see public/spa-redirect.html note in
+      vite.config) restores the path so the React Router takes over.
+
+      This works for both project sites (https://user.github.io/<repo>/) and
+      user/org sites — Vite's import.meta.env.BASE_URL handles the prefix.
+    -->
+    <script>
+      (function () {
+        var l = window.location;
+        sessionStorage.setItem("spa-redirect", l.pathname + l.search + l.hash);
+        // Strip the path back to the configured base (default "/").
+        // This file is copied to dist/ at build time, so it sits next to index.html.
+        var base = "/"; // replaced by the build script
+        l.replace(l.protocol + "//" + l.host + base);
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>
