@@ -1,8 +1,8 @@
 name: Supabase Heartbeat
 on:
   schedule:
-    - cron: '0 9 * * 1,4'  # Every Monday & Thursday at 9am UTC
-  workflow_dispatch:        # Allows manual trigger from GitHub UI
+    - cron: '37 6 * * *'   # Every day at 06:37 UTC — daily gives huge margin vs the 7-day pause
+  workflow_dispatch:
 
 jobs:
   ping:
@@ -13,6 +13,15 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
         run: |
-          curl -X GET "$SUPABASE_URL/rest/v1/quote_history?limit=1" \
+          set -euo pipefail
+          http_code=$(curl -sS -o /tmp/resp.txt -w "%{http_code}" \
+            -X GET "$SUPABASE_URL/rest/v1/quote_history?select=*&limit=1" \
             -H "apikey: $SUPABASE_KEY" \
-            -H "Authorization: Bearer $SUPABASE_KEY"
+            -H "Authorization: Bearer $SUPABASE_KEY")
+          echo "HTTP status: $http_code"
+          cat /tmp/resp.txt
+          if [ "$http_code" -lt 200 ] || [ "$http_code" -ge 300 ]; then
+            echo "Heartbeat failed — non-2xx response, project may pause"
+            exit 1
+          fi
+          echo "Heartbeat OK"
