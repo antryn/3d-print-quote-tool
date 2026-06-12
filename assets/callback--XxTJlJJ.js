@@ -1,0 +1,1 @@
+import{c as t,r as s,j as n}from"./index-C4RCLkAH.js";function r(){const e=t();return s.useEffect(()=>{e({to:"/"})},[e]),n.jsx("div",{className:"flex min-h-screen items-center justify-center",children:"Logging you in..."})}export{r as component};
